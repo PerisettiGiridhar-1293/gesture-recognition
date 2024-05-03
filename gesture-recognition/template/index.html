@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+     <style>
+       
+        body {
+            background-color: goldenrod;
+            height: 100vh;
+            text-align: center;
+            line-height: 1.6;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #fffdd0;
+            color: maroon;
+            font-size: 40px;
+            padding-top: 5px;
+            font-family: serif;
+            font-variant: small-caps;
+        }
+        .project-description {
+            margin-bottom: 20px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: bisque;
+            border-radius: 50px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 2px solid slategray;
+        }
+        .gesture-output {
+            color: maroon;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        footer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 40px;
+            background-color: darkslategrey;
+            color: #fff;
+        }
+        .member {
+            text-align: center;
+            margin: 0 10px;
+        }
+        .member h3 {
+            margin: 10px 0;
+        }
+        .member p {
+            margin: 5px 0;
+        }
+        .copyright {
+            text-align: center;
+            font-size: 14px;
+        }
+        .contact-info{
+            display: flex;
+            padding:right 1px;
+           
+        }
+        #con{
+            font-size: 20px;
+        }
+        
+        .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+        }
+        img{
+            border-radius: 29px;
+        }
+
+    </style>
+    <title>Hand gestures</title>
+</head>
+<body>
+    <header>Gesture-Based Language Recognition</header><br><br><br><br><br>
+    <section class="project-description">
+        The Gesture-Based Language Recognition app is an innovative tool designed to bridge communication barriers between individuals who use sign language and those who do not. Leveraging cutting-edge technologies in computer vision and machine learning, this app interprets and translates sign language gestures in real-time, enabling seamless communication.
+        <br><br>
+        <button onclick="startCamera()">Click to View</button>
+        <br><br>
+        <img id="videoFeed" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv5o0rjzUZV8D1UqVE1ukEFouAU0Tumj56onEyeQVc_w&s" alt="Video Feed">
+        <div id="gestureOutput" class="gesture-output">Gesture will appear here...</div>
+    </section><br><br><br><br><br><br>
+    <footer>
+        <div class="contact-info">
+            <h1 id="con">Contact info:</h1>
+           
+            <div class="member">
+                <h3>V.Yajnasri</h3>
+                <p>ph.no: 6304410931</p>
+                <p>Email: yajna@gmail.com.com</p>
+            </div>
+            <div class="member">
+                <h3>Sh.Reshma</h3>
+                <p>Ph.no: 90101140177</p>
+                <p>Email: reshma12@gmail.com</p>
+            </div>
+            <div class="member">
+                <h3>P.Giridhar</h3>
+                <p>Ph.no: 7702251861 </p>
+                <p>Email: giridhar93@gmail.com</p>
+            </div>
+            <div class="member">
+                <h3>P.Leela Sai Chandu</h3>
+                <p>Ph.no: 6304477463</p>
+                <p>Email: saichandu@gmail.com</p>
+            </div>
+            <div class="member">
+                <h3>S.Siva Ram</h3>
+                <p>Ph.no: 8977462699</p>
+                <p>Email: sivaram@gmail.com</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2024 Sign Language Detection Project. All rights reserved.
+        </div>
+    </footer>
+    <script>
+        function startCamera() {
+            document.getElementById('videoFeed').src = "{{ url_for('video_feed') }}";
+            setInterval(updateGesture, 1000); // Update gesture every second
+        }
+    
+        function updateGesture() {
+            fetch('{{ url_for("get_current_gesture") }}')  // Corrected the endpoint name here
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('gestureOutput').textContent = data;
+                })
+                .catch(error => console.error('Error fetching gesture:', error));
+        }
+    </script>    
+</body>
+</html>
